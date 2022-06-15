@@ -48,7 +48,7 @@ typedef struct instruction_s
  */
 typedef struct globalvariables
 {
-  int num;
+	int num;
 	char *line;
 	FILE *mfile;
 	stack_t *stack;
