@@ -1,22 +1,28 @@
 #include "monty.h"
 
 /**
-* push - push num to top of the stack
-* @stack: pointer to pointer
-* @line_number: unsigned int
-*/
-void push(stack_t **stack, unsigned int line_number)
-{
-	stack_t *newNode, *current = *stack;
+   * errorHandler - handle all errors and call freeEverything
+   * * @errno: error number.
+   * * @line_number: the line number of the opcode in the text file
+   */
 
-	(void)line_number;
-	newNode = malloc(sizeof(stack_t));
-	if (!newNode)
-		errorHandler(4, line_number);
-	newNode->n = gv.num;
-	newNode->next = *stack;
-	newNode->prev = NULL;
-	if (*stack)
-		current->prev = newNode;
-	*stack = newNode;
+void errorHandler(unsigned int errno, unsigned int line_number)
+{
+	switch (errno)
+	{
+			case 1:
+				fprintf(stderr, "L%d: usage: push integer\n", line_number);
+				break;
+			case 2:
+				fprintf(stderr, "USAGE: monty file\n");
+				break;
+			case 3:
+				fprintf(stderr, "Error: Can't open file %s\n", gv.filename);
+				break;
+			case 4:
+				fprintf(stderr, "Error: malloc failed\n");
+				break;
+		}
+		freeAll();
+		exit(EXIT_FAILURE);
 }
