@@ -1,22 +1,35 @@
 #include "monty.h"
 
 /**
-* push - push num to top of the stack
-* @stack: pointer to pointer
-* @line_number: unsigned int
-*/
-void push(stack_t **stack, unsigned int line_number)
-{
-	stack_t *newNode, *current = *stack;
+ * compare - a function that compares the string from getline to the opcode
+ * @token: token string
+ * @stack: pointer to pointer
+ * @line_number: unsigned int
+ *
+ * Return: void
+ */
 
-	(void)line_number;
-	newNode = malloc(sizeof(stack_t));
-	if (!newNode)
-		errorHandler(4, line_number);
-	newNode->n = gv.num;
-	newNode->next = *stack;
-	newNode->prev = NULL;
-	if (*stack)
-		current->prev = newNode;
-	*stack = newNode;
+void compare(char *token, stack_t **stack, unsigned int line_number)
+{
+	int i, foundMatch = 0;
+
+	instruction_t func_list[] = {
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"swap", swap},
+		{"add", add},
+		{"nop", nop},
+		{NULL, NULL}
+	};
+
+	for (i = 0; func_list[i].opcode != NULL; i++)
+		if (strcmp(token, func_list[i].opcode) == 0)
+		{
+			func_list[i].f(stack, line_number);
+			foundMatch = 1;
+		}
+	if (!foundMatch)
+		errorHandler(8, line_number);
 }
