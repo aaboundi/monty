@@ -1,22 +1,15 @@
 #include "monty.h"
 
 /**
-* push - push num to top of the stack
-* @stack: pointer to pointer
-* @line_number: unsigned int
-*/
-void push(stack_t **stack, unsigned int line_number)
-{
-	stack_t *newNode, *current = *stack;
+ * nop - a function that implements the nop opcode (does nothing)
+ * @stack: a pointer to the head of the stack_t
+ * @line_number: the line number of the opcode from the text file
+ *
+ * Return: void
+ */
 
+void nop(stack_t **stack, unsigned int line_number)
+{
+	(void)stack;
 	(void)line_number;
-	newNode = malloc(sizeof(stack_t));
-	if (!newNode)
-		errorHandler(4, line_number);
-	newNode->n = gv.num;
-	newNode->next = *stack;
-	newNode->prev = NULL;
-	if (*stack)
-		current->prev = newNode;
-	*stack = newNode;
 }
