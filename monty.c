@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	gv.mfile = fopen(argv[1], "r");
 	if (!gv.mfile)
 		errorHandler(3, line_number);
-	while (getline(&gv.line, &len, gv.mfile) != EOF)
+	while (fgets(&gv.line, &len, gv.mfile) != EOF)
 	{
 		line_number++;
 		gv.token = strtok(gv.line, " \t\n");
