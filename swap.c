@@ -1,22 +1,27 @@
 #include "monty.h"
 
 /**
-* push - push num to top of the stack
-* @stack: pointer to pointer
-* @line_number: unsigned int
-*/
-void push(stack_t **stack, unsigned int line_number)
-{
-	stack_t *newNode, *current = *stack;
+ * swap - a function that implements the swap opcode (swaps the top two
+ * elements of the stack_t)
+ * @stack: a pointer to the head of the stack_t
+ * @line_number: the line number of the opcode from the text file
+ *
+ * Return: void
+ */
 
-	(void)line_number;
-	newNode = malloc(sizeof(stack_t));
-	if (!newNode)
-		errorHandler(4, line_number);
-	newNode->n = gv.num;
-	newNode->next = *stack;
-	newNode->prev = NULL;
-	if (*stack)
-		current->prev = newNode;
-	*stack = newNode;
+void swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *curr, *temp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+		errorHandler2(16, line_number);
+	curr = *stack;
+	temp = (*stack)->next;
+
+	if (temp->next != NULL)
+		temp->next->prev = curr;
+	curr->next = temp->next;
+	temp->next = curr;
+	temp->prev = NULL;
+	*stack = temp;
 }
