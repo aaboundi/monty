@@ -1,22 +1,39 @@
 #include "monty.h"
 
 /**
-* push - push num to top of the stack
-* @stack: pointer to pointer
-* @line_number: unsigned int
-*/
-void push(stack_t **stack, unsigned int line_number)
+ * div - handles the div instruction
+ * @stack: double pointer to the stack to push to
+ * @line_number: number of the line in the file
+ */
+void div(stack_t **stack, unsigned int line_number)
 {
-	stack_t *newNode, *current = *stack;
+	int div = 0;
+	stack_t *node = NULL;
+	stack_t *node_0 = get_dnodeint_at_index(*stack, 0);
+	stack_t *node_1 = get_dnodeint_at_index(*stack, 1);
 
-	(void)line_number;
-	newNode = malloc(sizeof(stack_t));
-	if (!newNode)
-		errorHandler(4, line_number);
-	newNode->n = gv.num;
-	newNode->next = *stack;
-	newNode->prev = NULL;
-	if (*stack)
-		current->prev = newNode;
-	*stack = newNode;
+	if (dlistint_len(*stack) < 2)
+	{
+		dprintf(STDERR_FILENO, DIV_FAIL, line_number);
+		free_all(1);
+		exit(EXIT_FAILURE);
+	}
+
+	if (node_0->n == 0)
+	{
+		dprintf(STDERR_FILENO, DIV_ZERO, line_number);
+		free_all(1);
+		exit(EXIT_FAILURE);
+	}
+
+	div = node_1->n / node_0->n;
+	delete_dnodeint_at_index(stack, 0);
+	delete_dnodeint_at_index(stack, 0);
+	node = add_dnodeint(stack, div);
+	if (!node)
+	{
+		dprintf(STDERR_FILENO, MALLOC_FAIL);
+		free_all(1);
+		exit(EXIT_FAILURE);
+	}
 }
