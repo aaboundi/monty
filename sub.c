@@ -14,7 +14,7 @@ void sub_handler(stack_t **stack, unsigned int line_number)
 
 	if (dlistint_len(*stack) < 2)
 	{
-		dprintf(STDERR_FILENO, SUB_FAIL, line_number);
+		errorHandler(6, line_number);
 		free_all(1);
 		exit(EXIT_FAILURE);
 	}
