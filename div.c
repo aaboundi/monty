@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * div - handles the div instruction
+ * div_handler - handles the div instruction
  * @stack: double pointer to the stack to push to
  * @line_number: number of the line in the file
  */
