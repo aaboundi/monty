@@ -59,6 +59,19 @@ typedef struct globalvariables
 
 extern gbv gv;
 
+typedef struct data_s
+{
+	char *line;
+	char **words;
+	stack_t *stack;
+	FILE *fptr;
+	int qflag;
+} data_t;
+
+typedef stack_t dlistint_t;
+
+extern data_t data;
+
 void errorHandler(unsigned int errno, unsigned int line_number);
 void errorHandler2(unsigned int errno, unsigned int line_number);
 char *isNumber(char *value, unsigned int line_number);
@@ -83,6 +96,7 @@ void _stack(stack_t **stack, unsigned int line_number);
 
 void freeAll(void);
 void freeLinkedList(stack_t *stack);
+void free_all(int all);
 
 /* list_funcs1.c */
 size_t dlistint_len(const dlistint_t *h);
