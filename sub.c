@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * sub - handles the sub instruction
+ * sub_handler - handles the sub instruction
  * @stack: double pointer to the stack to push to
  * @line_number: number of the line in the file
  */
