@@ -41,5 +41,5 @@ void compare(char *token, stack_t **stack, unsigned int line_number)
 			foundMatch = 1;
 		}
 	if (!foundMatch)
-		errorHandler(8, line_number);
+		errorHandler(18, line_number);
 }
