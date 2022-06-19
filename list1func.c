@@ -1,37 +1,58 @@
 #include "monty.h"
 
 /**
- * dlistint_len - returns the number of nodes in a doubly linked list
- * @h: pointer to the list
+ * insert_dnodeint_at_index - inserts a node at a given index
+ * in a doubly linked list
+ * @h: double pointer to the list
+ * @idx: index of the node to insert
+ * @n: data to insert
  *
- * Return: number of nodes
+ * Return: address of the new node, or NULL if it failed
  */
-size_t dlistint_len(const dlistint_t *h)
+dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	size_t nodes = 0;
+	unsigned int i;
+	dlistint_t *new;
+	dlistint_t *temp = *h;
 
-	if (!h)
-		return (0);
+	if (idx == 0)
+		return (add_dnodeint(h, n));
 
-	while (h)
+	for (i = 0; temp && i < idx; i++)
 	{
-		nodes++;
-		h = h->next;
+		if (i == idx - 1)
+		{
+			if (temp->next == NULL)
+				return (add_dnodeint_end(h, n));
+			new = malloc(sizeof(dlistint_t));
+			if (!new || !h)
+				return (NULL);
+			new->n = n;
+			new->next = NULL;
+			new->next = temp->next;
+			new->prev = temp;
+			temp->next->prev = new;
+			temp->next = new;
+			return (new);
+		}
+		else
+			temp = temp->next;
 	}
 
-	return (nodes);
+	return (NULL);
 }
 
 /**
- * add_dnodeint - adds a new node at the beginning of a doubly linked list
+ * add_dnodeint_end - adds a new node at the end of a doubly linked list
  * @head: double pointer to the list
  * @n: data to insert in the new node
  *
  * Return: the address of the new element, or NULL if it failed
  */
-dlistint_t *add_dnodeint(dlistint_t **head, const int n)
+dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)
 {
 	dlistint_t *new;
+	dlistint_t *temp = *head;
 
 	if (!head)
 		return (NULL);
@@ -41,99 +62,36 @@ dlistint_t *add_dnodeint(dlistint_t **head, const int n)
 		return (NULL);
 
 	new->n = n;
+	new->next = NULL;
 
-	new->next = *head;
-	new->prev = NULL;
+	if (*head == NULL)
+	{
+		new->prev = NULL;
+		*head = new;
+		return (new);
+	}
 
-	if (*head)
-		(*head)->prev = new;
+	while (temp->next)
+		temp = temp->next;
 
-	*head = new;
+	temp->next = new;
+	new->prev = temp;
 
 	return (new);
 }
 
 /**
- * print_dlistint - prints a doubly linked list
- * @h: pointer to the list
- *
- * Return: number of nodes in the list
+ * free_dlistint - frees a doubly linked list
+ * @head: pointer to the list to free
  */
-size_t print_dlistint(const dlistint_t *h)
+void free_dlistint(dlistint_t *head)
 {
-	size_t nodes = 0;
+	dlistint_t *temp;
 
-	if (!h)
-		return (0);
-
-	while (h)
+	while (head)
 	{
-		printf("%d\n", h->n);
-		h = h->next;
-		nodes++;
+		temp = head->next;
+		free(head);
+		head = temp;
 	}
-
-	return (nodes);
-}
-
-/**
- * delete_dnodeint_at_index - deltes a node in a doubly linked list
- * at a given index
- * @head: double pointer to the list
- * @index: index of the node to delete
- *
- * Return: 1 on success, -1 on failure
- */
-int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
-{
-	dlistint_t *temp = *head;
-	unsigned int i = 0;
-
-	if (!index)
-	{
-		(*head) = temp->next;
-		if (temp->next)
-			temp->next->prev = NULL;
-		temp->next = NULL;
-		free(temp);
-		return (1);
-	}
-
-	while (i < index)
-	{
-		temp = temp->next;
-		i++;
-		if (!temp)
-			return (0);
-	}
-
-	temp->prev->next = temp->next;
-	if (temp->next)
-		temp->next->prev = temp->prev;
-	free(temp);
-
-	return (1);
-}
-
-/**
- * get_dnodeint_at_index - gets the nth node of a doubly linked list
- * @head: pointer to the list
- * @index: index of the node to return
- *
- * Return: address of the node, or if it does not exist, NULL
- */
-dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index)
-{
-	unsigned int i = 0;
-
-	if (!head)
-		return (NULL);
-
-	while (head && i < index)
-	{
-		head = head->next;
-		i++;
-	}
-
-	return (head ? head : NULL);
 }
