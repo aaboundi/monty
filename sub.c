@@ -5,7 +5,7 @@
  * @stack: double pointer to the stack to push to
  * @line_number: number of the line in the file
  */
-void sub(stack_t **stack, unsigned int line_number)
+void sub_handler(stack_t **stack, unsigned int line_number)
 {
 	int sub = 0;
 	stack_t *node = NULL;
