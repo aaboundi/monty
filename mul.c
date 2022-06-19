@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
- * mul - handles the mul instruction
+ * mul_handler - handles the mul instruction
  * @stack: double pointer to the stack to push to
  * @line_number: number of the line in the file
  */
-void mul(stack_t **stack, unsigned int line_number)
+void mul_handler(stack_t **stack, unsigned int line_number)
 {
 	int mul = 0;
 	stack_t *node = NULL;
