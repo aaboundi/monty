@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
- * mod - handles the mod instruction
+ * mod_handler - handles the mod instruction
  * @stack: double pointer to the stack to push to
  * @line_number: number of the line in the file
  */
-void mod(stack_t **stack, unsigned int line_number)
+void mod_handler(stack_t **stack, unsigned int line_number)
 {
 	int mod = 0;
 	stack_t *node = NULL;
